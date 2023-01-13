@@ -59,8 +59,8 @@ impl ClientMessage {
     }
 
     /* Getters */
-    pub fn client(&self) -> String { self.client }
-    pub fn content(&self) -> Vec<u8> { self.content }
+    pub fn client(&self) -> &String { &self.client }
+    pub fn content(&self) -> &Vec<u8> { &self.content }
     pub fn date(&self) -> usize { self.date }
-    pub fn id(&self) -> String { self.id }
+    pub fn id(&self) -> &String { &self.id }
 }
