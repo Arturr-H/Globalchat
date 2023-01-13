@@ -8,3 +8,9 @@ keywords = ["chat", "websockets", "realtime"]
 authors = ["Artur Hoffsummer <artur.h.0427@gmail.com>"]
 
 [dependencies]
+
+## Websocket handling
+tungstenite = "0.18.0"
+
+## Http-requests for account manager
+reqwest = "0.11.13"
