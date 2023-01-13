@@ -2,5 +2,9 @@
 name = "globalchat"
 version = "0.1.0"
 edition = "2021"
+description = "Chat application. All needed is an account"
+license = "MIT"
+keywords = ["chat", "websockets", "realtime"]
+authors = ["Artur Hoffsummer <artur.h.0427@gmail.com>"]
 
 [dependencies]
