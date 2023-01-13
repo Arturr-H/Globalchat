@@ -3,6 +3,7 @@ use std::net::TcpListener;
 use std::thread::spawn;
 
 use tungstenite::accept;
+use crate::incoming::handle_message;
 
 mod incoming;
 mod message;
@@ -21,13 +22,25 @@ fn main() {
     /* Incoming requests */
     for stream in server.incoming() {
         spawn (move || {
-            let mut websocket = accept(stream.unwrap()).unwrap();
-            loop {
-                let msg = websocket.read_message().unwrap();
+            let mut websocket = match accept(match stream {
+                Ok(e) => e,
+                Err(_) => return
+            }) {
+                Ok(e) => e,
+                Err(_) => return
+            };
 
-                if msg.is_binary() || msg.is_text() {
-                    websocket.write_message(msg).unwrap();
+            /* Message loop */
+            loop {
+                let msg = match handle_message(match websocket.read_message() {
+                    Ok(e) => e,
+                    Err(_) => continue
+                }) {
+                    Ok(e) => e,
+                    Err(_) => continue
                 };
+
+                // TODO: Implement logic
             };
         });
     };
