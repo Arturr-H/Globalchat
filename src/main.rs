@@ -1,6 +1,11 @@
 /* Imports */
-use std::net::TcpListener;
-use std::thread::spawn;
+use dotenv::dotenv;
+use lazy_static::lazy_static;
+use std::{
+    net::TcpListener,
+    thread::spawn,
+    env::var
+};
 
 use tungstenite::accept;
 use crate::incoming::handle_message;
@@ -11,17 +16,24 @@ mod message;
 /* Constants */
 const ADDRESS: &'static str = "127.0.0.1";
 const PORT: u16 = 8080;
+lazy_static! {
+    pub static ref ACCOUNT_MANAGER_URL:String = var("ACCOUNT_MANAGER_URL").unwrap();
+}
 
 fn main() {
-    let addr = format!("{ADDRESS}:{PORT}");
+    dotenv().unwrap();
 
+    /* Load lazy initialized env varaibles to prewarn about missing vars */
+    let _ = &**ACCOUNT_MANAGER_URL;
+    
     /* Initialize stream */
+    let addr = format!("{ADDRESS}:{PORT}");
     let server = TcpListener::bind(&addr).unwrap();
     println!("{addr}");
 
     /* Incoming requests */
     for stream in server.incoming() {
-        spawn (move || {
+        spawn(move || {
             let mut websocket = match accept(match stream {
                 Ok(e) => e,
                 Err(_) => return
