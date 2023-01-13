@@ -4,6 +4,9 @@ use std::thread::spawn;
 
 use tungstenite::accept;
 
+mod incoming;
+mod message;
+
 /* Constants */
 const ADDRESS: &'static str = "127.0.0.1";
 const PORT: u16 = 8080;
