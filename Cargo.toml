@@ -24,3 +24,6 @@ dotenv = "0.15.0"
 
 ## For global env variables
 lazy_static = "1.4.0"
+
+## UUID for message-ids
+uuid = "1.2.2"
