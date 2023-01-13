@@ -57,4 +57,10 @@ impl ClientMessage {
     pub fn to_json(&self) -> Option<String> {
         serde_json::to_string(&self).ok()
     }
+
+    /* Getters */
+    pub fn client(&self) -> String { self.client }
+    pub fn content(&self) -> Vec<u8> { self.content }
+    pub fn date(&self) -> usize { self.date }
+    pub fn id(&self) -> String { self.id }
 }
