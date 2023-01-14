@@ -52,7 +52,12 @@ fn main() {
                     Err(_) => continue
                 };
 
-                // TODO: Implement logic
+                /* Write to client */
+                websocket.write_message(
+                    tungstenite::Message::Text(
+                        msg.to_stripped_json().unwrap()
+                    )
+                ).unwrap();
             };
         });
     };
