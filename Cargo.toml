@@ -7,6 +7,9 @@ license = "MIT"
 keywords = ["chat", "websockets", "realtime"]
 authors = ["Artur Hoffsummer <artur.h.0427@gmail.com>"]
 
+[lib]
+path = "src/main.rs"
+
 [dependencies]
 
 ## Websocket handling
