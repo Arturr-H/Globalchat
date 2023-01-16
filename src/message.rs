@@ -8,6 +8,7 @@ use uuid::Uuid;
 
 /* Request is the user request (in JSON) which contains important data */
 #[derive(Deserialize)]
+#[cfg_attr(debug_assertions, derive(Debug))]
 pub struct Request {
     /// JWT
     client: String,
@@ -18,6 +19,7 @@ pub struct Request {
 
 /* Response */
 #[derive(Serialize)]
+#[cfg_attr(debug_assertions, derive(Debug))]
 pub struct Response {
     /// User suid
     suid: String,
@@ -34,6 +36,7 @@ pub struct Response {
 
 /* ClientMessage is the usermessage, with additional information like id which is created server-side */
 #[derive(Serialize)]
+#[cfg_attr(debug_assertions, derive(Debug))]
 pub struct ClientMessage {
     /// JWT
     client: String,
