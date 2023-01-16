@@ -7,7 +7,7 @@ use std::{
     env::var
 };
 
-use tungstenite::accept;
+use tokio_tungstenite::{ tungstenite::{ accept, Message } };
 use crate::incoming::handle_message;
 
 mod incoming;
@@ -54,7 +54,7 @@ fn main() {
 
                 /* Write to client */
                 websocket.write_message(
-                    tungstenite::Message::Text(
+                    Message::Text(
                         msg.to_stripped_json().unwrap()
                     )
                 ).unwrap();

@@ -1,5 +1,5 @@
 /* Imports */
-use tungstenite::Message;
+use tokio_tungstenite::tungstenite::Message;
 use serde_json;
 use crate::message::{ ClientMessage, Request };
 
