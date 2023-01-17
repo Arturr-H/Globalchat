@@ -35,7 +35,7 @@ pub struct Response {
 }
 
 /* ClientMessage is the usermessage, with additional information like id which is created server-side */
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 #[cfg_attr(debug_assertions, derive(Debug))]
 pub struct ClientMessage {
     /// JWT
