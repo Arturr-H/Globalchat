@@ -23,8 +23,11 @@ section {
 	height: 100%;
 	width: 100%;
 
-	display: flex;
-	flex-direction: column-reverse;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	/* align-items: flex-end; */
+	gap: 1rem;
 
 	box-sizing: border-box;
 	padding-bottom: 1rem;
@@ -38,7 +41,7 @@ section {
 }
 
 /* Inputs */
-.input {
+.input > form {
 	width: 100%;
 	height: 4rem;
 	border: none;
@@ -54,14 +57,14 @@ section {
 	display: inline-flex;
 	flex-direction: row;
 	gap: 0.5rem;
-}.input > input[type="text"].chat-input {
+}.input > form > input[type="text"].chat-input {
 	font-family: "Noto Sans", sans-serif;
 	font-weight: 200;
 
 	border: none;
 	outline: none;
 	width: 100%;
-}.input > button {
+}.input > form > button {
 	height: 100%;
 	width: 4.5rem;
 
@@ -74,7 +77,6 @@ section {
 .message {
 	width: 100%;
 	max-width: 70rem;
-	min-height: 3rem;
 
 	display: flex;
 	flex-direction: row;
