@@ -18,8 +18,10 @@ class App extends React.PureComponent {
 	}
 	componentDidMount() {
 		let token = this.getCookie("token");
-		if (token === null) { return this.account = false };
+		let suid = this.getCookie("token");
+		if (token === null || suid === null) { this.setState({ loading: false }); return this.account = false };
 
+		console.log("a");
 		fetch(this.accountManager + "profile/verify-token", {
 			method: "GET",
 			headers: { token_key: token },
@@ -52,7 +54,7 @@ class App extends React.PureComponent {
 	render() {
 		return (
 			<>
-				{this.state.loading === false ? this.account ? <Main /> : <Account /> : null}
+				{this.state.loading === false ? (this.account ? <Main /> : <Account />) : null}
 			</>
 		)
 	};

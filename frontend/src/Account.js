@@ -53,12 +53,12 @@ class Account extends React.PureComponent {
         }).then(e => {
             if (e.status === 200) {
                 e.json().then(e => {
-                    console.log("CREATED TOKEN:::: ", e.token);
                     this.setCookie("token", e.token, 30);
+                    this.setCookie("suid", e.suid, 30);
                     window.location.reload();
                 });
             } else {
-                Message.error("Invalid email or password.");
+                alert("Invalid email or password.");
             };
         })
     }
