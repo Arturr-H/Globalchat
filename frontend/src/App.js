@@ -1,7 +1,7 @@
-import "./App.css";
 import React from "react";
-import Message from "./Message";
-import Icon from "./Icon";
+import Main from "./Main";
+import Account from "./Account";
+import Globals from "./Globals";
 
 class App extends React.PureComponent {
 	constructor(props) {
@@ -9,101 +9,53 @@ class App extends React.PureComponent {
 
 		/* Changeable */
 		this.state = {
-			messages: [{ content: "hej" }, { content: "hej" }],
-			users: [],
-			inputData: ""
+			loading: true
 		};
-
-		/* Refs */
-		this.input = React.createRef();
 
 		/* Static */
-		this.ws = null;
+		this.accountManager = Globals.accountManager;
+		this.account = false;
 	}
-
-	/* Functions */
-	submitText = () => {
-		if (this.ws === null) { return };
-		console.log("a");
-		let text = this.state.inputData;
-
-		/* Clear text input */
-		this.setState({ inputData: "" });
-
-		/* Send text */
-		if (text.length > 0) {
-			this.ws.send(JSON.stringify({
-				content: this.encodeItems(text),
-				client: "aaaaawihdoahwodihaowihd"
-			}));
-		}
-	}
-
 	componentDidMount() {
-		this.ws = new WebSocket("ws://localhost:8080/");
+		let token = this.getCookie("token");
+		if (token === null) { return this.account = false };
 
-		if (this.ws !== null) {
-			this.ws.onopen = () => {
-				console.log('WebSocket connected');
+		fetch(this.accountManager + "profile/verify-token", {
+			method: "GET",
+			headers: { token_key: token },
+		}).then(e => {
+			this.setState({ loading: false });
+			if (e.status === 200) {
+				this.account = true;
+				this.forceUpdate();
 			};
-			this.ws.onmessage = this.handleMessage;
-			this.ws.onclose = () => {
-				console.log('WebSocket disconnected');
-			};
-		};
-	}
-	componentWillUnmount() {
-		this.ws.close();
+		});
 	}
 
-	/* Websocket functions */
-	handleMessage = (event) => {
-		let json = JSON.parse(event.data);
-		json["content"] = this.convertToRealContent(json["content"]);
-
-		/* Push message */
-		this.setState({ messages: [...this.state.messages, json] });
+	/* Cookies */	
+	getCookie = (name) => {
+		let cookieValue = null;
+		if (document.cookie && document.cookie !== '') {
+			let cookies = document.cookie.split(';');
+			for (let i = 0; i < cookies.length; i++) {
+				let cookie = cookies[i].trim();
+				// Does this cookie string begin with the name we want?
+				if (cookie.substring(0, name.length + 1) === (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
 	}
 
-	/*- Convert bytes into real text strings -*/
-	convertToRealContent = (content) => {
-		const decoder = new TextDecoder();
-		return decoder.decode(new Uint8Array(content));
-	};
-	encodeItems = (content) => {
-		let utf8Encode = new TextEncoder();
-		return Array.from(utf8Encode.encode(content));
-	}
-
-	/* Render */
 	render() {
 		return (
-			<main>
-				<section>
-					{this.state.messages.map(message => <Message {...message} />)}
-				</section>
-				<div className="input">
-					<form onSubmit={(e) => { e.preventDefault(); this.submitText(); }}>
-						<button className="add-button">
-							<Icon size={32} dark icon="paperclip" />
-						</button>
-
-						<input
-							type="text"
-							placeholder="Skriv nåt..."
-							className="chat-input"
-							ref={this.input}
-							value={this.state.inputData}
-							onChange={(e) => this.setState({ inputData: e.target.value })}
-						/>
-						<button onClick={this.submitText} className="send-button">
-							<Icon size={32} dark icon="forward" />
-						</button>
-					</form>
-				</div>
-			</main>
-		);
-	}
+			<>
+				{this.state.loading === false ? this.account ? <Main /> : <Account /> : null}
+			</>
+		)
+	};
 }
 
 export default App;
