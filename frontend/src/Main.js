@@ -24,7 +24,6 @@ class Main extends React.PureComponent {
 	/* Functions */
 	submitText = () => {
 		if (this.ws === null) { return };
-		console.log("a");
 		let text = this.state.inputData;
 
 		/* Clear text input */

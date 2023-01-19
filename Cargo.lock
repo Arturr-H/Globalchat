@@ -233,22 +233,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "globalchat"
-version = "0.1.0"
-dependencies = [
- "dotenv",
- "futures-channel",
- "futures-util",
- "lazy_static",
- "reqwest",
- "serde",
- "serde_json",
- "tokio",
- "tokio-tungstenite",
- "uuid",
-]
-
-[[package]]
 name = "h2"
 version = "0.3.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -750,6 +734,22 @@ dependencies = [
  "cfg-if",
  "cpufeatures",
  "digest",
+]
+
+[[package]]
+name = "shitshat"
+version = "0.1.0"
+dependencies = [
+ "dotenv",
+ "futures-channel",
+ "futures-util",
+ "lazy_static",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tokio-tungstenite",
+ "uuid",
 ]
 
 [[package]]
