@@ -9,7 +9,7 @@ class Main extends React.PureComponent {
 
 		/* Changeable */
 		this.state = {
-			messages: [{ content: "hej" }, { content: "hej" }],
+			messages: [],
 			users: [],
 			inputData: ""
 		};
@@ -84,7 +84,7 @@ class Main extends React.PureComponent {
 				<div className="input">
 					<form onSubmit={(e) => { e.preventDefault(); this.submitText(); }}>
 						<button className="add-button">
-							<Icon size={32} dark icon="paperclip" />
+							<Icon size={32} mode="dark" icon="paperclip" />
 						</button>
 
 						<input
@@ -96,7 +96,7 @@ class Main extends React.PureComponent {
 							onChange={(e) => this.setState({ inputData: e.target.value })}
 						/>
 						<button onClick={this.submitText} className="send-button">
-							<Icon size={32} dark icon="forward" />
+							<Icon size={32} mode="dark" icon="forward" />
 						</button>
 					</form>
 				</div>

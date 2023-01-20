@@ -19,9 +19,11 @@ class Icon extends React.PureComponent {
 	render() {
 		return (
 			<img {...this.props} style={this.props.size && { width:this.props.size, height:this.props.size }} alt={"icon " + this.props.icon} src={
-				this.props.dark === true 
+				this.props.mode === "dark" 
 				? this.icons.dark[this.props.icon]
-				: this.icons.light[this.props.icon]
+				: this.props.mode === "light"
+				? this.icons.light[this.props.icon]
+				: null
 			} />
 		)
 	}
