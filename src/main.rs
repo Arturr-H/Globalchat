@@ -69,11 +69,12 @@ async fn handle_connection(peer_map: PeerMap, raw_stream: TcpStream, addr: Socke
             Ok(e) => e,
             Err(_) => return future::ok(())
         };
+        dbg!(&data);
         let message = match handle_message(data) {
             Ok(e) => e,
             Err(_) => return future::ok(())
         };
-
+        dbg!(&message);
         /* Write to all clients including ourselves */
         for recp in peers.iter().map(|(_, ws_sink)| ws_sink) {
             match recp.unbounded_send(

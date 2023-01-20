@@ -10,12 +10,25 @@ class Message extends React.PureComponent {
 		};
 
 		/* Refs */
+		this.self = React.createRef();
+	}
+
+	componentDidMount() {
+		if (this.self) {
+			this.self.current.animate([
+				{ transform: "translateX(100px)", opacity: 0 },
+				{ transform: "translateX(0px)", opacity: 1 }
+			], {
+				duration: 200,
+				easing: "ease-in-out"
+			});
+		};
 	}
 
 	/* Render */
 	render() {
 		return (
-            <div className="message">
+            <div ref={this.self} className="message">
                 <div className="user-profile" alt="profile picture">
                     <img alt="profile picture" />
                 </div>
