@@ -17,23 +17,6 @@ pub struct Request {
     content: Vec<u8>,
 }
 
-/* Response */
-#[derive(Serialize)]
-#[cfg_attr(debug_assertions, derive(Debug))]
-pub struct Response {
-    /// User suid
-    suid: String,
-
-    /// Content as bytes
-    content: Vec<u8>,
-
-    /// Date sent
-    date: usize,
-
-    /// Message ID (generated server-side)
-    id: String
-}
-
 /* ClientMessage is the usermessage, with additional information like id which is created server-side */
 #[derive(Serialize, Clone)]
 #[cfg_attr(debug_assertions, derive(Debug))]
@@ -74,7 +57,7 @@ impl ClientMessage {
     pub fn to_stripped_json(self) -> Option<String> {
         serde_json::to_string(
             //TODO: FIX SUID
-            &Response::from_client_message(
+            &Self::from_client_message(
                 self,
                 String::new()
             )
@@ -86,13 +69,10 @@ impl ClientMessage {
     pub fn content(&self) -> &Vec<u8> { &self.content }
     pub fn date(&self) -> usize { self.date }
     pub fn id(&self) -> &String { &self.id }
-}
 
-/* Implementations for Response */
-impl Response {
-    pub fn from_client_message(message:ClientMessage, suid:String) -> Self {
+    pub fn from_client_message(message:ClientMessage, client:String) -> Self {
         Self {
-            suid,
+            client,
             content: message.content,
             date: message.date,
             id: message.id
