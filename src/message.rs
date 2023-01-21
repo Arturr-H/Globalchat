@@ -17,6 +17,13 @@ pub struct Request {
     content: Vec<u8>,
 }
 
+/* Getters */
+impl Request {
+    pub fn client(&self) -> &String {
+        &self.client
+    }
+}
+
 /* ClientMessage is the usermessage, with additional information like id which is created server-side */
 #[derive(Serialize, Clone)]
 #[cfg_attr(debug_assertions, derive(Debug))]
