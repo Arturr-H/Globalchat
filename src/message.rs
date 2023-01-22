@@ -73,7 +73,3 @@ impl ClientMessage {
     pub fn date(&self) -> usize { self.date }
     pub fn id(&self) -> &String { &self.id }
 }
-
-fn get_sys_time_in_secs() -> u128 {
-    SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap().as_millis()
-}
