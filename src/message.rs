@@ -61,13 +61,9 @@ impl ClientMessage {
     }
 
     /* Convert to JSON */
-    pub fn to_stripped_json(self) -> Option<String> {
+    pub fn to_stripped_json(&self) -> Option<String> {
         serde_json::to_string(
-            //TODO: FIX SUID
-            &Self::from_client_message(
-                self,
-                String::new()
-            )
+            self
         ).ok()
     }
 
@@ -76,15 +72,6 @@ impl ClientMessage {
     pub fn content(&self) -> &Vec<u8> { &self.content }
     pub fn date(&self) -> usize { self.date }
     pub fn id(&self) -> &String { &self.id }
-
-    pub fn from_client_message(message:ClientMessage, client:String) -> Self {
-        Self {
-            client,
-            content: message.content,
-            date: message.date,
-            id: message.id
-        }
-    }
 }
 
 fn get_sys_time_in_secs() -> u128 {
