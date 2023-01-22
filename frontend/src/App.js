@@ -21,6 +21,7 @@ class App extends React.PureComponent {
 		let suid = this.getCookie("token");
 		if (token === null || suid === null) { this.setState({ loading: false }); return this.account = false };
 
+		console.log("TOKEN = ", token);
 		fetch(this.accountManager + "profile/verify-token", {
 			method: "GET",
 			headers: { token_key: token },

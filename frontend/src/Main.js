@@ -33,10 +33,26 @@ class Main extends React.PureComponent {
 		if (text.length > 0) {
 			this.ws.send(JSON.stringify({
 				content: this.encodeItems(text),
-				client: "aaaaawihdoahwodihaowihd"
+				client: this.getCookie("token")
 			}));
 		}
 	}
+	getCookie = (cname) => {
+		let name = cname + "=";
+		let decodedCookie = decodeURIComponent(document.cookie);
+		let ca = decodedCookie.split(';');
+		for (let i = 0; i < ca.length; i++) {
+			let c = ca[i];
+			while (c.charAt(0) === ' ') {
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) === 0) {
+				return c.substring(name.length, c.length);
+			}
+		}
+		return "";
+	}
+
 
 	componentDidMount() {
 		this.ws = new WebSocket("ws://localhost:8080/");
@@ -78,8 +94,9 @@ class Main extends React.PureComponent {
 	render() {
 		return (
 			<main>
+				<img className="watermark" src={require("./assets/logos/ShitShatText.svg").default} />
 				<section>
-					{this.state.messages.map(message => <Message {...message} />)}
+					{this.state.messages.map((message, idx) => <Message key={idx} {...message} />)}
 				</section>
 				<div className="input">
 					<form onSubmit={(e) => { e.preventDefault(); this.submitText(); }}>

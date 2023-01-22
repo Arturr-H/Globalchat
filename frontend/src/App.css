@@ -6,6 +6,7 @@ html, body {
 	padding: 0;
 	color: #333;
 	background-color: #ffffff;
+	overflow: hidden;
 }
 main {
 	height: 100vh;
@@ -32,6 +33,7 @@ section {
 	box-sizing: border-box;
 	padding-bottom: 1rem;
 	overflow-y: scroll;
+	overflow-x: hidden;
 
 	/* Hide scrollbar */
 	-ms-overflow-style: none;
@@ -96,6 +98,7 @@ section {
 	border-radius: 5rem;
 	color: transparent;
 	border: 0.1rem solid #e0e0e0;
+	filter: brightness(105%);
 }.message > .main {
 	display: flex;
 	flex-direction: column;
@@ -106,6 +109,8 @@ section {
 	font-weight: 300;
 	margin: 0;
 	padding: 0;
+	word-wrap: break-word;
+	word-break: break-all;
 }.message > .main > .data {
 	font-family: "Noto Sans", sans-serif;
 	font-weight: 500;
@@ -199,4 +204,19 @@ form.account-details {
 	background: rgb(82, 131, 200, 0.8);
 }.account-details > input[type="submit"]:active {
 	background: rgb(82, 131, 200, 0.6);
+}
+
+/* Watermark */
+.watermark {
+	width: 20rem;
+	height: 20rem;
+	opacity: 0.03;
+	user-select: none;
+	pointer-events: none;
+
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+
+	position: absolute;
 }
