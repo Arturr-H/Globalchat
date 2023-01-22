@@ -29,16 +29,16 @@ impl Request {
 #[cfg_attr(debug_assertions, derive(Debug))]
 pub struct ClientMessage {
     /// JWT
-    client: String,
+    pub client: String,
 
     /// Content as bytes
-    content: Vec<u8>,
+    pub content: Vec<u8>,
 
     /// Date sent
-    date: usize,
+    pub date: usize,
 
     /// Message ID (generated server-side)
-    id: String
+    pub id: String
 }
 
 /* Method implementations */
