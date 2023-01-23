@@ -2,6 +2,7 @@ import "./App.css";
 import React from "react";
 import Message from "./Message";
 import Icon from "./Icon";
+import Attachments from "./Attachments";
 
 class Main extends React.PureComponent {
 	constructor(props) {
@@ -11,7 +12,9 @@ class Main extends React.PureComponent {
 		this.state = {
 			messages: [],
 			users: [],
-			inputData: ""
+			inputData: "",
+
+			attachmentActive: false,
 		};
 
 		/* Refs */
@@ -22,20 +25,25 @@ class Main extends React.PureComponent {
 	}
 
 	/* Functions */
-	submitText = () => {
+	submitText = (custom = null) => {
 		if (this.ws === null) { return };
-		let text = this.state.inputData;
+		let text;
+		if (custom !== null) {
+			text = custom;
+		}else {
+			text = this.state.inputData;
+		};
 
 		/* Clear text input */
 		this.setState({ inputData: "" });
-
+		
 		/* Send text */
 		if (text.length > 0) {
 			this.ws.send(JSON.stringify({
 				content: this.encodeItems(text),
 				client: this.getCookie("token")
 			}));
-		}
+		};
 	}
 	getCookie = (cname) => {
 		let name = cname + "=";
@@ -90,6 +98,10 @@ class Main extends React.PureComponent {
 		return Array.from(utf8Encode.encode(content));
 	}
 
+	toggleAttachments = () => {
+		this.setState({ attachmentActive: !this.state.attachmentActive });
+	}
+
 	/* Render */
 	render() {
 		return (
@@ -98,12 +110,12 @@ class Main extends React.PureComponent {
 				<section>
 					{this.state.messages.map((message, idx) => <Message key={idx} {...message} />)}
 				</section>
+				<Attachments sendData={this.submitText} active={this.state.attachmentActive} />
 				<div className="input">
+					<button className={"add-button" + (this.state.attachmentActive ? " active" : "")} onClick={this.toggleAttachments}>
+						<Icon size={32} mode="dark" icon="paperclip" />
+					</button>
 					<form onSubmit={(e) => { e.preventDefault(); this.submitText(); }}>
-						<button className="add-button">
-							<Icon size={32} mode="dark" icon="paperclip" />
-						</button>
-
 						<input
 							type="text"
 							placeholder="Skriv nåt..."
@@ -112,7 +124,7 @@ class Main extends React.PureComponent {
 							value={this.state.inputData}
 							onChange={(e) => this.setState({ inputData: e.target.value })}
 						/>
-						<button onClick={this.submitText} className="send-button">
+						<button onClick={(e) => this.submitText(this.state.inputData)} className="send-button">
 							<Icon size={32} mode="dark" icon="forward" />
 						</button>
 					</form>

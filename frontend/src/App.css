@@ -19,6 +19,7 @@ main {
 
 	box-sizing: border-box;
 	padding: 1rem;
+	position: relative;
 }
 section {
 	height: 100%;
@@ -43,22 +44,35 @@ section {
 }
 
 /* Inputs */
-.input > form {
+.input {
+	box-sizing: border-box;
+	padding: 0.5rem;
 	width: 100%;
 	height: 4rem;
 	border: none;
 	outline: none;
 	margin: 0;
-
+	
 	background: none;
 	border-radius: 0 0.5rem 0.5rem 0;
-
+	
 	outline: 0.1rem solid #e0e0e0;
 	border-radius: 0.5rem;
-
+	display: inline-flex;
+	flex-direction: row;
+}.input > form {
 	display: inline-flex;
 	flex-direction: row;
 	gap: 0.5rem;
+
+	width: 100%;
+	height: 100%;
+	border: none;
+	outline: none;
+	margin: 0;
+
+	box-sizing: border-box;
+	padding-left: 0.5rem;
 }.input > form > input[type="text"].chat-input {
 	font-family: "Noto Sans", sans-serif;
 	font-weight: 200;
@@ -66,13 +80,22 @@ section {
 	border: none;
 	outline: none;
 	width: 100%;
-}.input > form > button {
+}.input button {
 	height: 100%;
 	width: 4.5rem;
 
 	outline: none;
 	border: none;
 	background: none;
+
+	border-radius: 0.5rem;
+	cursor: pointer;
+}.input button:hover {
+	background: #f5f5f5;
+}.input button:active {
+	background: #eaeaea;
+}.input button.active {
+	background: #eaeaea;
 }
 
 /* Message */
@@ -205,6 +228,96 @@ form.account-details {
 }.account-details > input[type="submit"]:active {
 	background: rgb(82, 131, 200, 0.6);
 }
+
+/* Attachments */
+.attachments {
+	width: 24rem;
+	height: 12rem;
+	position: absolute;
+
+	background: #fff;
+	bottom: 6rem;
+	border-radius: 0.5rem;
+	border: 0.1rem solid #e0e0e0;
+	overflow: hidden;
+}.attachments > .tab-bar {
+	width: 100%;
+	height: 2rem;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+		align-items: center;
+	overflow: hidden;
+
+	border-bottom: 0.1rem solid #f0f0f0;
+}.attachments > .tab-bar > button {
+	outline: none;
+	border: none;
+
+	height: 100%;
+	width: 50%;
+
+	background: #fff;
+	font-family: "Noto Sans", sans-serif;
+	font-weight: 500;
+	font-size: 1rem;
+	color: #999;
+
+	transition: background 0.05s ease-in-out;
+}.attachments > .tab-bar > button.active {
+	color: #333;
+	border-bottom: 0.2rem solid rgb(82, 131, 200);
+}.attachments > .tab-bar > button:hover {
+	background: #f5f5f5;
+}.attachments > .tab-bar > button:active {
+	background: #eaeaea;
+}
+
+/* Gif window */
+.gifs {
+	height: 100%;
+	overflow-y: scroll;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}.gifs > form > input.search {
+	height: 2rem;
+	width: 100%;
+	max-width: 24rem;
+
+	font-family: "Noto Sans", sans-serif;
+	font-weight: 500;
+	font-size: 1rem;
+	color: #333;
+
+	border: none;
+	outline: none;
+	border-bottom: 0.1rem solid #e0e0e0;
+
+	box-sizing: border-box;
+	padding: 0 0.5rem;
+}.gifs::-webkit-scrollbar { 
+	display: none;  /* Safari and Chrome */
+}.gif-container {
+	-webkit-column-count: 5;
+	-webkit-column-gap:   0px;
+	-moz-column-count:    5;
+	-moz-column-gap:      0px;
+	column-count:         3;
+	column-gap:           0px;
+
+	gap: 0.5rem;
+	box-sizing: border-box;
+	padding: 0.5rem;
+}.gif-container > .gif-item {
+	border-radius: 0.5rem;
+	border: 0.1rem solid #e0e0e0;
+	width: 100% !important;
+	height: auto !important;
+
+	margin-bottom: 0.5rem;
+}
+
 
 /* Watermark */
 .watermark {
