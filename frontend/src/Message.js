@@ -1,6 +1,7 @@
 import "./App.css";
 import React from "react";
 import Globals from "./Globals";
+import MessageSplat from "./MessageSplat";
 
 class Message extends React.PureComponent {
 	constructor(props) {
@@ -10,7 +11,8 @@ class Message extends React.PureComponent {
 		this.state = {
 			client: {
 				username: "",
-			}
+			},
+			totalShits: 0,
 		};
 
 		/* Refs */
@@ -47,10 +49,15 @@ class Message extends React.PureComponent {
 		});
 	}
 
+	increaseShits = () => {
+		this.setState({ totalShits: this.state.totalShits + 1 });
+		this.props.increaseShits(this.props.id);
+	}
+
 	/* Render */
 	render() {
 		return (
-            <div ref={this.self} className="message">
+            <div ref={this.self} className="message" id={this.props.id}>
                 <div className="user-profile">
                     <img src={this.profilePicture} alt="profile" />
                 </div>
@@ -58,6 +65,12 @@ class Message extends React.PureComponent {
                     <p className="data">@{this.state.client.username} - {new Date(this.props.date).toDateString()}</p>
                     <p className="content">{this.props.content}</p>
                 </div>
+
+				<MessageSplat
+					deleteMessage={this.props.deleteMessage}
+					increaseShits={this.increaseShits}
+					intensity={this.state.totalShits}
+				/>
             </div>
 		);
 	}

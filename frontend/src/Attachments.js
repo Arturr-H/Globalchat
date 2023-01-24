@@ -78,6 +78,11 @@ class Gifs extends React.PureComponent {
 		this.getGifs();
 		console.log("SSET GIF");
 	}
+	handleData = (data) => {
+		if (!this.props.sendData) return {}
+		console.log(data);
+		this.props.sendData(data);
+	}
 
 	render() {
 		return (
@@ -90,7 +95,7 @@ class Gifs extends React.PureComponent {
 					{
 						this.state.gifs.map((gif, index) => {
 							return (
-								<img className="gif-item" key={index} src={gif.media[0].gif.url} alt={gif.title} />
+								<img onClick={() => this.handleData(gif.media[0].gif.url)} className="gif-item" key={index} src={gif.media[0].gif.url} alt={gif.title} />
 							)
 						})
 					}

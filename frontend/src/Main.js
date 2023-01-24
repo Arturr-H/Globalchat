@@ -36,10 +36,11 @@ class Main extends React.PureComponent {
 
 		/* Clear text input */
 		this.setState({ inputData: "" });
-		
+
 		/* Send text */
 		if (text.length > 0) {
 			this.ws.send(JSON.stringify({
+				_type: "message",
 				content: this.encodeItems(text),
 				client: this.getCookie("token")
 			}));
@@ -102,15 +103,37 @@ class Main extends React.PureComponent {
 		this.setState({ attachmentActive: !this.state.attachmentActive });
 	}
 
+	/* Delete message */
+	deleteMessage = (id) => {
+		console.log("delte", id);
+	}
+	increaseShits = (id) => {
+		console.log("shat on", id);
+		this.ws.send(JSON.stringify({
+			_type: "shit",
+			message_id: id,
+			suid: this.getCookie("suid")
+		}));
+	}
+
 	/* Render */
 	render() {
 		return (
 			<main>
 				<img className="watermark" src={require("./assets/logos/ShitShatText.svg").default} />
 				<section>
-					{this.state.messages.map((message, idx) => <Message key={idx} {...message} />)}
+					{
+						this.state.messages.map((message, idx) => 
+							<Message
+								key={idx}
+								deleteMessage={() => this.deleteMessage(message.id)}
+								increaseShits={this.increaseShits}
+								{...message}
+							/>
+						)
+					}
 				</section>
-				<Attachments sendData={this.submitText} active={this.state.attachmentActive} />
+				<Attachments sendData={(e) => this.submitText(e)} active={this.state.attachmentActive} />
 				<div className="input">
 					<button className={"add-button" + (this.state.attachmentActive ? " active" : "")} onClick={this.toggleAttachments}>
 						<Icon size={32} mode="dark" icon="paperclip" />
