@@ -25,6 +25,7 @@ class Message extends React.PureComponent {
 
 	componentDidMount() {
 		this.getClientData();
+		console.log(this.state.client.profilePicture);
 
 		if (this.self) {
 			this.self.current.animate([
@@ -35,64 +36,6 @@ class Message extends React.PureComponent {
 				easing: "ease-in-out"
 			});
 		};
-	}
-
-	getSplats = () => {
-        let amountOfSplats = Math.floor(Math.random() * 5 * this.state.totalShits) + this.state.totalShits*5;
-        let splats = [];
-        this.index += 1;
-
-        if (this.index > 5) {
-            this.index = 0;
-            this.props.deleteMessage();
-        }
-
-        for (let i = 0; i < amountOfSplats; i++) {
-            let coord = this.randomizeCoordinate(Math.max(20 - this.props.intensity*2, 1));
-            splats.push({
-                x: coord[0],
-                y: coord[1],
-                size: Math.floor(Math.random() * 30) + 20,
-            });
-        };
-
-        return splats;
-    }
-	/*
-        Generate a random number between 0 and 100 using exponential distribution.
-        It's more likely to return a number close to 0 or 100, but it's still possible to get a number in the middle. 
-    */
-	randomizeCoordinate = (dist) => {
-		if (Math.random() > 0.5) {
-			let random = [];
-			for (let i = 0; i < dist; i++) { random.push(Math.random()); };
-
-			/* Grab the number furthest away from 0.5 */
-			let furthestIndex = 0;
-			random.forEach((e, i) => {
-				if (Math.abs(e - 0.5) > Math.abs(random[furthestIndex] - 0.5)) {
-					furthestIndex = i;
-				};
-			});
-
-			/* Convert to percentage */
-			return [Math.floor(Math.random() * 100), Math.floor(random[furthestIndex] * 100)];
-		}
-		else {
-			let random = [];
-			for (let i = 0; i < dist; i++) { random.push(Math.random()); };
-
-			/* Grab the number furthest away from 0.5 */
-			let furthestIndex = 0;
-			random.forEach((e, i) => {
-				if (Math.abs(e - 0.5) > Math.abs(random[furthestIndex] - 0.5)) {
-					furthestIndex = i;
-				};
-			});
-
-			/* Convert to percentage */
-			return [Math.floor(random[furthestIndex] * 100), Math.floor(Math.random() * 100)];
-		}
 	}
 
 	/* Get client data */
@@ -106,10 +49,8 @@ class Message extends React.PureComponent {
 		});
 	}
 	increaseShits = () => {
-		console.log("increaseShits");
-		this.props.increaseShits(this.props.id, (shits) => {
-			this.setState({ totalShits: shits });
-		});
+		this.setState({ totalShits: this.state.totalShits + 1 });
+		this.props.increaseShits(this.props.id);
 	}
 
 	/* Render */
@@ -127,8 +68,7 @@ class Message extends React.PureComponent {
 				<MessageSplat
 					deleteMessage={this.props.deleteMessage}
 					increaseShits={this.increaseShits}
-					intensity={this.props.shits}
-					splats={this.getSplats()}
+					intensity={this.state.totalShits}
 				/>
             </div>
 		);
