@@ -42,6 +42,9 @@ pub struct ClientMessage {
 
     /// Shits (like tomatoes). Vector of suid:s
     pub shits: Vec<String>,
+
+    /// Type of message
+    pub _type: String
 }
 
 /* Method implementations */
@@ -53,6 +56,7 @@ impl Into<ClientMessage> for Request {
             content: self.content,
             id: ClientMessage::gen_id(),
             shits: vec![],
+            _type: "message".to_string()
         }
     }
 }
