@@ -83,6 +83,7 @@ class Main extends React.PureComponent {
 	/* Websocket functions */
 	handleMessage = (event) => {
 		let json = JSON.parse(event.data);
+		if (json._type !== "message") { return };
 		json["content"] = this.convertToRealContent(json["content"]);
 
 		/* Push message */

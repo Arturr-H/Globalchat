@@ -48,7 +48,6 @@ class Message extends React.PureComponent {
 			};
 		});
 	}
-
 	increaseShits = () => {
 		this.setState({ totalShits: this.state.totalShits + 1 });
 		this.props.increaseShits(this.props.id);
