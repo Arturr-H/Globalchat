@@ -38,7 +38,10 @@ pub struct ClientMessage {
     pub date: usize,
 
     /// Message ID (generated server-side)
-    pub id: String
+    pub id: String,
+
+    /// Amount of shits (like tomatoes)
+    pub shits: usize,
 }
 
 /* Method implementations */
@@ -48,7 +51,8 @@ impl Into<ClientMessage> for Request {
             date: 1,
             client: self.client,
             content: self.content,
-            id: ClientMessage::gen_id()
+            id: ClientMessage::gen_id(),
+            shits: 0,
         }
     }
 }
@@ -72,4 +76,5 @@ impl ClientMessage {
     pub fn content(&self) -> &Vec<u8> { &self.content }
     pub fn date(&self) -> usize { self.date }
     pub fn id(&self) -> &String { &self.id }
+    pub fn shits(&self) -> usize { self.shits }
 }
