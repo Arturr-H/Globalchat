@@ -70,7 +70,7 @@ class Main extends React.PureComponent {
 			this.ws.onopen = () => {
 				console.log('WebSocket connected');
 			};
-			this.ws.onmessage = this.handleMessage;
+			this.ws.onmessage = this.handleWebsocketEvent;
 			this.ws.onclose = () => {
 				console.log('WebSocket disconnected');
 			};
@@ -79,15 +79,40 @@ class Main extends React.PureComponent {
 	componentWillUnmount() {
 		this.ws.close();
 	}
+	handleWebsocketEvent = (evt) => {
+		let json = JSON.parse(evt.data);
+
+		/* Handle message */
+		switch (json._type) {
+			case "message":
+				this.handleMessage(json);
+				break;
+			case "shit":
+				this.handleShit(json);
+				break;
+			default:
+				console.log("Unknown event", json);
+				break;
+		};
+	}
 
 	/* Websocket functions */
-	handleMessage = (event) => {
-		let json = JSON.parse(event.data);
-		if (json._type !== "message") { return };
+	handleMessage = (json) => {
 		json["content"] = this.convertToRealContent(json["content"]);
 
 		/* Push message */
 		this.setState({ messages: [...this.state.messages, json] });
+	}
+	handleShit = (json) => {
+		let message_id = json.message_id;
+
+		/* Find message index */
+		let message_idx = this.state.messages.findIndex((message) => message.id === message_id);
+
+		/* Increase shits */
+		let messages = this.state.messages;
+		messages[message_idx].shits += 1;
+		this.setState({ messages: messages });
 	}
 
 	/*- Convert bytes into real text strings -*/
